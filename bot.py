@@ -413,14 +413,14 @@ class NodeGo:
             tasks = []
             tasks.append(asyncio.create_task(self.process_daily_checkin(user, token, email, use_proxy)))
             tasks.append(asyncio.create_task(self.process_complete_tasks(user, token, email, use_proxy)))
-            if use_proxy:
-                for i in range(node_count):
-                    num_id = i + 1
-                    tasks.append(asyncio.create_task(self.process_send_ping(token, email, num_id, use_proxy)))
+            # if use_proxy:
+            #     for i in range(node_count):
+            #         num_id = i + 1
+            #         tasks.append(asyncio.create_task(self.process_send_ping(token, email, num_id, use_proxy)))
 
-            else:
-                num_id = 1
-                tasks.append(asyncio.create_task(self.process_send_ping(token, email, num_id, use_proxy)))
+            # else:
+            #     num_id = 1
+            #     tasks.append(asyncio.create_task(self.process_send_ping(token, email, num_id, use_proxy)))
 
             await asyncio.gather(*tasks)
         
