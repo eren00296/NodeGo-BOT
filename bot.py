@@ -362,34 +362,34 @@ class NodeGo:
 
             await asyncio.sleep(24 * 60 * 60)
 
-    async def process_send_ping(self, token: str, email: str, num_id: int, use_proxy: bool):
-        while True:
-            proxy = self.get_next_proxy_for_account(num_id) if use_proxy else None
+    # async def process_send_ping(self, token: str, email: str, num_id: int, use_proxy: bool):
+    #     while True:
+    #         proxy = self.get_next_proxy_for_account(num_id) if use_proxy else None
 
-            print(
-                f"{Fore.CYAN + Style.BRIGHT}[ {datetime.now().astimezone(wib).strftime('%x %X %Z')} ]{Style.RESET_ALL}"
-                f"{Fore.WHITE + Style.BRIGHT} | {Style.RESET_ALL}"
-                f"{Fore.BLUE + Style.BRIGHT}Try to Sent Ping...{Style.RESET_ALL}                                   ",
-                end="\r",
-                flush=True
-            )
+    #         print(
+    #             f"{Fore.CYAN + Style.BRIGHT}[ {datetime.now().astimezone(wib).strftime('%x %X %Z')} ]{Style.RESET_ALL}"
+    #             f"{Fore.WHITE + Style.BRIGHT} | {Style.RESET_ALL}"
+    #             f"{Fore.BLUE + Style.BRIGHT}Try to Sent Ping...{Style.RESET_ALL}                                   ",
+    #             end="\r",
+    #             flush=True
+    #         )
 
-            ping = await self.send_ping(token, email, num_id, proxy)
-            if ping:
-                message = ping.get("message")
-                self.print_message(self.mask_account(email), proxy, Fore.WHITE, 
-                    f"Node {num_id}"
-                    f"{Fore.MAGENTA + Style.BRIGHT} - {Style.RESET_ALL}"
-                    f"{Fore.GREEN + Style.BRIGHT}{message}{Style.RESET_ALL}"
-                )
+    #         ping = await self.send_ping(token, email, num_id, proxy)
+    #         if ping:
+    #             message = ping.get("message")
+    #             self.print_message(self.mask_account(email), proxy, Fore.WHITE, 
+    #                 f"Node {num_id}"
+    #                 f"{Fore.MAGENTA + Style.BRIGHT} - {Style.RESET_ALL}"
+    #                 f"{Fore.GREEN + Style.BRIGHT}{message}{Style.RESET_ALL}"
+    #             )
 
-            print(
-                f"{Fore.CYAN + Style.BRIGHT}[ {datetime.now().astimezone(wib).strftime('%x %X %Z')} ]{Style.RESET_ALL}"
-                f"{Fore.WHITE + Style.BRIGHT} | {Style.RESET_ALL}"
-                f"{Fore.BLUE + Style.BRIGHT}Wait For 10 Minutes For Next Ping...{Style.RESET_ALL}",
-                end="\r"
-            )
-            await asyncio.sleep(10 * 60)
+    #         print(
+    #             f"{Fore.CYAN + Style.BRIGHT}[ {datetime.now().astimezone(wib).strftime('%x %X %Z')} ]{Style.RESET_ALL}"
+    #             f"{Fore.WHITE + Style.BRIGHT} | {Style.RESET_ALL}"
+    #             f"{Fore.BLUE + Style.BRIGHT}Wait For 10 Minutes For Next Ping...{Style.RESET_ALL}",
+    #             end="\r"
+    #         )
+    #         await asyncio.sleep(10 * 60)
 
     async def process_get_user_data(self, token: str, email: str, use_proxy: bool):
         proxy = self.get_next_proxy_for_account(email) if use_proxy else None
