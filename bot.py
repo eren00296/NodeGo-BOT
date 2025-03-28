@@ -274,46 +274,46 @@ class NodeGo:
                     f"{Fore.YELLOW + Style.BRIGHT}{str(e)}{Style.RESET_ALL}"
                 )
             
-    async def send_ping(self, token: str, email: str, num_id: int, proxy=None, retries=5):
-        url = "https://nodego.ai/api/user/nodes/ping"
-        data = json.dumps({"type":"extension"})
-        headers = {
-            "Accept": "application/json, text/plain, */*",
-            "Accept-Language": "id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7",
-            "Authorization": f"Bearer {token}",
-            "Content-Length": str(len(data)),
-            "Content-Type": "application/json",
-            "Origin": "chrome-extension://jbmdcnidiaknboflpljihfnbonjgegah",
-            "Sec-Fetch-Dest": "empty",
-            "Sec-Fetch-Mode": "cors",
-            "Sec-Fetch-Site": "none",
-            "Sec-Fetch-Storage-Access": "active",
-            "User-Agent": FakeUserAgent().random
-        }
-        for attempt in range(retries):
-            try:
-                response = await asyncio.to_thread(requests.post, url=url, headers=headers, data=data, proxy=proxy, timeout=60, impersonate="safari15_5")
-                if response.status_code == 429:
-                    return self.print_message(self.mask_account(email), proxy, Fore.WHITE, 
-                        f"Node {num_id} "
-                        f"{Fore.MAGENTA + Style.BRIGHT}-{Style.RESET_ALL}"
-                        f"{Fore.RED + Style.BRIGHT} PING Failed: {Style.RESET_ALL}"
-                        f"{Fore.YELLOW + Style.BRIGHT}Too many request!{Style.RESET_ALL}"
-                    )
-                response.raise_for_status()
-                result = response.json()
-                return result["metadata"]
-            except Exception as e:
-                if attempt < retries - 1:
-                    await asyncio.sleep(5)
-                    continue
+    # async def send_ping(self, token: str, email: str, num_id: int, proxy=None, retries=5):
+    #     url = "https://nodego.ai/api/user/nodes/ping"
+    #     data = json.dumps({"type":"extension"})
+    #     headers = {
+    #         "Accept": "application/json, text/plain, */*",
+    #         "Accept-Language": "id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7",
+    #         "Authorization": f"Bearer {token}",
+    #         "Content-Length": str(len(data)),
+    #         "Content-Type": "application/json",
+    #         "Origin": "chrome-extension://jbmdcnidiaknboflpljihfnbonjgegah",
+    #         "Sec-Fetch-Dest": "empty",
+    #         "Sec-Fetch-Mode": "cors",
+    #         "Sec-Fetch-Site": "none",
+    #         "Sec-Fetch-Storage-Access": "active",
+    #         "User-Agent": FakeUserAgent().random
+    #     }
+    #     for attempt in range(retries):
+    #         try:
+    #             response = await asyncio.to_thread(requests.post, url=url, headers=headers, data=data, proxy=proxy, timeout=60, impersonate="safari15_5")
+    #             if response.status_code == 429:
+    #                 return self.print_message(self.mask_account(email), proxy, Fore.WHITE, 
+    #                     f"Node {num_id} "
+    #                     f"{Fore.MAGENTA + Style.BRIGHT}-{Style.RESET_ALL}"
+    #                     f"{Fore.RED + Style.BRIGHT} PING Failed: {Style.RESET_ALL}"
+    #                     f"{Fore.YELLOW + Style.BRIGHT}Too many request!{Style.RESET_ALL}"
+    #                 )
+    #             response.raise_for_status()
+    #             result = response.json()
+    #             return result["metadata"]
+    #         except Exception as e:
+    #             if attempt < retries - 1:
+    #                 await asyncio.sleep(5)
+    #                 continue
 
-                return self.print_message(self.mask_account(email), proxy, Fore.WHITE, 
-                    f"Node {num_id} "
-                    f"{Fore.MAGENTA + Style.BRIGHT}-{Style.RESET_ALL}"
-                    f"{Fore.RED + Style.BRIGHT} PING Failed: {Style.RESET_ALL}"
-                    f"{Fore.YELLOW + Style.BRIGHT}{str(e)}{Style.RESET_ALL}"
-                )
+    #             return self.print_message(self.mask_account(email), proxy, Fore.WHITE, 
+    #                 f"Node {num_id} "
+    #                 f"{Fore.MAGENTA + Style.BRIGHT}-{Style.RESET_ALL}"
+    #                 f"{Fore.RED + Style.BRIGHT} PING Failed: {Style.RESET_ALL}"
+    #                 f"{Fore.YELLOW + Style.BRIGHT}{str(e)}{Style.RESET_ALL}"
+    #             )
 
     async def process_daily_checkin(self, user, token: str, email: str, use_proxy: bool):
         while True:
